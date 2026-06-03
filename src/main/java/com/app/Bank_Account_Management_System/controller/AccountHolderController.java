@@ -35,7 +35,7 @@ public class AccountHolderController {
     public ResponseEntity<String> updateAccount(@Valid @RequestBody AccountHolderRequest accountHolderRequest,
                                                 @PathVariable Long id) {
         accountHolderService.updateAccount(id , accountHolderRequest);
-        return ResponseEntity.ok("User updated successfully");
+        return ResponseEntity.ok("Account updated successfully");
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAccount(@PathVariable Long id) {
