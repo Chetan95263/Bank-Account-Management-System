@@ -17,9 +17,11 @@ import java.util.stream.Collectors;
 public class AccountHolderService {
     private final AccountHolderRepository accountHolderRepository;
 
-    public Optional<AccountHolderResponse> getAccountHolderById(Long id) {
-        return accountHolderRepository.findById(id)
-                .map(this::mapToAccountHolderResponse);
+    public AccountHolderResponse getAccountHolderById(Long id) {
+        AccountHolder accountHolder = accountHolderRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Account holder not found with id: " + id)
+        );
+        return mapToAccountHolderResponse(accountHolder);
     }
 
     public void createAccount(AccountHolderRequest accountHolderRequest) {
@@ -39,6 +41,12 @@ public class AccountHolderService {
                         new ResourceNotFoundException("Account holder not found with id: " + id));
         updateAccountFromRequest(existingAccount, accountHolderRequest);
         accountHolderRepository.save(existingAccount);
+    }
+    public void deleteAccount(Long id) {
+        AccountHolder accountHolder = accountHolderRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Account holder not found with id: " + id)
+        );
+        accountHolderRepository.delete(accountHolder);
     }
     private void updateAccountFromRequest(AccountHolder accountHolder , AccountHolderRequest accountHolderRequest) {
         accountHolder.setFirstName(accountHolderRequest.getFirstName());

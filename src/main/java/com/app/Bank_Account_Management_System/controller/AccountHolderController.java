@@ -20,9 +20,7 @@ public class AccountHolderController {
 
     @GetMapping("/{id}")
     public ResponseEntity<AccountHolderResponse> getAccountHolderById(@PathVariable Long id){
-        return accountHolderService.getAccountHolderById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(accountHolderService.getAccountHolderById(id));
     }
     @GetMapping
     public ResponseEntity<List<AccountHolderResponse>> getAllAccountHolder() {
@@ -39,6 +37,12 @@ public class AccountHolderController {
         accountHolderService.updateAccount(id , accountHolderRequest);
         return ResponseEntity.ok("User updated successfully");
     }
-    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAccount(@PathVariable Long id) {
+        accountHolderService.deleteAccount(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 
 }
