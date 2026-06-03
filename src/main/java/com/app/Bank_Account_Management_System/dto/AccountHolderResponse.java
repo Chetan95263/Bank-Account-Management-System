@@ -1,6 +1,5 @@
 package com.app.Bank_Account_Management_System.dto;
 
-import com.app.Bank_Account_Management_System.model.AccountType;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -13,7 +12,6 @@ public class AccountHolderResponse {
     private String email;
     private String phoneNumber;
     private String address;
-    private AccountType accountType;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

@@ -53,7 +53,7 @@ public class AccountHolderService {
         accountHolder.setEmail(accountHolderRequest.getEmail());
         accountHolder.setAddress(accountHolderRequest.getAddress());
         accountHolder.setPhoneNumber(accountHolderRequest.getPhoneNumber());
-        accountHolder.setAccountType(accountHolderRequest.getAccountType());
+
     }
     private AccountHolderResponse mapToAccountHolderResponse(AccountHolder accountHolder) {
         AccountHolderResponse response = new AccountHolderResponse();
@@ -62,9 +62,9 @@ public class AccountHolderService {
         response.setLastName(accountHolder.getLastName());
         response.setEmail(accountHolder.getEmail());
         response.setPhoneNumber(accountHolder.getPhoneNumber());
-        response.setAccountType(accountHolder.getAccountType());
         response.setCreatedAt(accountHolder.getCreatedAt());
         response.setUpdatedAt(accountHolder.getUpdatedAt());
+        response.setAddress(accountHolder.getAddress());
         return response;
     }
 

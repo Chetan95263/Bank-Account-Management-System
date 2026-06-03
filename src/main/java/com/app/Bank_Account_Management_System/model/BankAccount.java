@@ -9,21 +9,22 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-public class AccountHolder {
+public class BankAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String accountNumber;
+    private Double balance;
 
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phoneNumber;
-    private String address;
+    @Enumerated(EnumType.STRING)
+    private AccountType accountType;
+
+    @OneToOne
+    private AccountHolder accountHolder;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
 }
