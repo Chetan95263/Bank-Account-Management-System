@@ -10,6 +10,7 @@ import com.app.Bank_Account_Management_System.repository.BankAccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class BankAccountService {
     public void createBankAccount(BankAccountRequest bankAccountRequest) {
         BankAccount bankAccount = new BankAccount();
         updateRequestToBankAccount(bankAccount , bankAccountRequest);
-        bankAccount.setBalance(0.0);
+        bankAccount.setBalance(BigDecimal.valueOf(0));
         bankAccount.setAccountNumber(UUID.randomUUID().toString());
         AccountHolder accountHolder = accountHolderRepository.findById(bankAccountRequest.getAccountHolderId()).orElseThrow(
                 () -> new ResourceNotFoundException("Account Holder not found with id: "+bankAccountRequest.getAccountHolderId())
