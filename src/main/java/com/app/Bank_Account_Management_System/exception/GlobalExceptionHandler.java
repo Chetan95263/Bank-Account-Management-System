@@ -13,16 +13,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<MessageDTO> resourceNotFoundExceptionHandle(ResourceNotFoundException ex){
         return ResponseEntity.status(HttpStatus.NOT_FOUND) .body(new MessageDTO(ex.getMessage()));
     }
-    @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<MessageDTO> badRequestExceptionHandle(BadRequestException ex){
-        return ResponseEntity .status(HttpStatus.BAD_REQUEST) .body(new MessageDTO(ex.getMessage()));
-    }
-    @ExceptionHandler(ConflictException.class)
-    public ResponseEntity<MessageDTO> conflictExceptionHandle(ConflictException ex) {
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(new MessageDTO(
-                        ex.getMessage()
-                ));
+    @ExceptionHandler(InsufficientBalanceException.class)
+    public ResponseEntity<MessageDTO> InsufficientBalanceException(InsufficientBalanceException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageDTO(ex.getMessage()));
     }
 }
