@@ -12,6 +12,4 @@ public class TransactionRequest {
     private BigDecimal amount;
     @NotBlank(message = "Transaction type(e.g DEPOSIT , WITHDRAW) , is required")
     private TransactionType transactionType;
-    @NotBlank
-    private Long bankAccountId;
 }
