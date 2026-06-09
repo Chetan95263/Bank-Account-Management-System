@@ -18,9 +18,7 @@ public class CustomUserPrincipal
     private final User user;
 
     @Override
-    public Collection<? extends GrantedAuthority>
-    getAuthorities() {
-
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(
                 new SimpleGrantedAuthority(
                         "ROLE_" + user.getRole().name()
@@ -30,13 +28,11 @@ public class CustomUserPrincipal
 
     @Override
     public String getPassword() {
-
         return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-
         return user.getUsername();
     }
 
@@ -54,13 +50,11 @@ public class CustomUserPrincipal
 
     @Override
     public boolean isCredentialsNonExpired() {
-
         return true;
     }
 
     @Override
     public boolean isEnabled() {
-
         return true;
     }
 }

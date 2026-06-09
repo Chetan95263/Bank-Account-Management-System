@@ -17,26 +17,10 @@ public class CustomUserDetailService
     private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(
-            @NonNull String username
-    ) throws UsernameNotFoundException {
-
+    public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
         User user = userRepository
                 .findByUsername(username)
-                .orElseThrow(() ->
-                        new UsernameNotFoundException(
-                                "User not found"
-                        )
-                );
-        System.out.println(
-                "User found: "
-                        + user.getUsername()
-        );
-
-        System.out.println(
-                "DB Password: "
-                        + user.getPassword()
-        );
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         return new CustomUserPrincipal(user);
     }

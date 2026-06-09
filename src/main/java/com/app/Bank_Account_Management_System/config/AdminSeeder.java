@@ -25,15 +25,7 @@ public class AdminSeeder implements CommandLineRunner {
                     .password(passwordEncoder.encode("admin123"))
                     .role(Role.ADMIN)
                     .build();
-
-            System.out.println(
-                    passwordEncoder.matches(
-                            "admin123",
-                            admin.getPassword()
-                    )
-            );
             userRepository.save(admin);
-            System.out.println("Default admin created successfully!");
         }
     }
 }
