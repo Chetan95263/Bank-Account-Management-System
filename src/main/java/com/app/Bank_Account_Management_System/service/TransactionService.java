@@ -2,6 +2,7 @@ package com.app.Bank_Account_Management_System.service;
 
 import com.app.Bank_Account_Management_System.dto.TransactionRequest;
 import com.app.Bank_Account_Management_System.dto.TransactionResponse;
+import com.app.Bank_Account_Management_System.dto.user.UserTransactionResponse;
 import com.app.Bank_Account_Management_System.exception.InsufficientBalanceException;
 import com.app.Bank_Account_Management_System.exception.ResourceNotFoundException;
 import com.app.Bank_Account_Management_System.model.BankAccount;
@@ -9,6 +10,7 @@ import com.app.Bank_Account_Management_System.model.Transaction;
 import com.app.Bank_Account_Management_System.model.TransactionType;
 import com.app.Bank_Account_Management_System.repository.BankAccountRepository;
 import com.app.Bank_Account_Management_System.repository.TransactionRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +22,20 @@ import java.util.stream.Collectors;
 public class TransactionService {
     private final BankAccountRepository bankAccountRepository;
     private final TransactionRepository transactionRepository;
+    private final AuthenticatedUserService authenticatedUserService;
 
     public TransactionResponse fetchTransactionById(Long id) {
         Transaction transaction = transactionRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Transaction not found with id: "+id)
         );
         return mapToTransactionResponse(transaction);
+    }
+    public List<UserTransactionResponse> getAllTransactions() {
+        BankAccount bankAccount = authenticatedUserService.getCurrentUserBankAccount();
+        return transactionRepository.findByBankAccount(bankAccount)
+                .stream()
+                .map(this::mapToUserTransactionResponse)
+                .collect(Collectors.toList());
     }
 
     public List<TransactionResponse> getAllTransaction() {
@@ -35,13 +45,14 @@ public class TransactionService {
                 .collect(Collectors.toList());
     }
 
-    public void createTransaction(TransactionRequest request) {
+    public void performTransaction(TransactionRequest request) {
+        // adding transaction
         Transaction transaction = new Transaction();
         updateRequestToTransaction(transaction , request);
-        BankAccount bankAccount = bankAccountRepository.findById(request.getBankAccountId()).orElseThrow(
-                () -> new ResourceNotFoundException("Bank Account not found with id: "+request.getBankAccountId())
-        );
+        BankAccount bankAccount = authenticatedUserService.getCurrentUserBankAccount();
         transaction.setBankAccount(bankAccount);
+
+        // Type of transaction
         if(transaction.getTransactionType() == TransactionType.DEPOSIT) {
             bankAccount.setBalance(bankAccount.getBalance().add(transaction.getAmount()));
         } else {
@@ -62,5 +73,12 @@ public class TransactionService {
     private void updateRequestToTransaction(Transaction transaction , TransactionRequest request) {
         transaction.setAmount(request.getAmount());
         transaction.setTransactionType(request.getTransactionType());
+    }
+    private UserTransactionResponse mapToUserTransactionResponse(Transaction transaction){
+        UserTransactionResponse response = new UserTransactionResponse();
+        response.setTransactionTime(transaction.getTransactionTime());
+        response.setAmount(transaction.getAmount());
+        response.setTransactionType(transaction.getTransactionType());
+        return response;
     }
 }
