@@ -1,6 +1,5 @@
 package com.app.Bank_Account_Management_System.repository;
 
-import com.app.Bank_Account_Management_System.dto.user.UserTransactionResponse;
 import com.app.Bank_Account_Management_System.model.BankAccount;
 import com.app.Bank_Account_Management_System.model.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;

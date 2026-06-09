@@ -86,31 +86,19 @@ public class SecurityConfig {
     @Bean
     public AuthenticationProvider
     authenticationProvider() {
-
-        DaoAuthenticationProvider provider =
-                new DaoAuthenticationProvider(customUserDetailService);
-
-        provider.setPasswordEncoder(
-                passwordEncoder()
-        );
-
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(customUserDetailService);
+        provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
 
     @Bean
     public AuthenticationManager
-    authenticationManager(
-            AuthenticationConfiguration config
-    ) throws Exception {
-
-        return config
-                .getAuthenticationManager();
+    authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
 
     @Bean
-    public PasswordEncoder
-    passwordEncoder() {
-
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
     @Bean

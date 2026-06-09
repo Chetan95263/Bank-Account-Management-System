@@ -1,13 +1,12 @@
 package com.app.Bank_Account_Management_System.dto;
 
 import com.app.Bank_Account_Management_System.model.AccountType;
-import com.app.Bank_Account_Management_System.model.Role;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.math.BigDecimal;
 
 @Data
 public class AddUserDTO {
