@@ -7,13 +7,15 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/account-holder")
+@RequestMapping("/api/admin/account-holder")
+@PreAuthorize("hasRole('ADMIN')")
 public class AccountHolderController {
 
     private final AccountHolderService accountHolderService;
@@ -37,12 +39,5 @@ public class AccountHolderController {
         accountHolderService.updateAccount(id , accountHolderRequest);
         return ResponseEntity.ok("Account updated successfully");
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAccount(@PathVariable Long id) {
-        accountHolderService.deleteAccount(id);
-        return ResponseEntity.noContent().build();
-    }
-
-
 
 }

@@ -6,13 +6,15 @@ import com.app.Bank_Account_Management_System.service.BankAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/bank-account")
+@RequestMapping("/api/admin/bank-account")
+@PreAuthorize("hasRole('ADMIN')")
 public class BankAccountController {
     private final BankAccountService bankAccountService;
 
