@@ -2,6 +2,7 @@ package com.app.Bank_Account_Management_System.service;
 
 import com.app.Bank_Account_Management_System.dto.BankAccountRequest;
 import com.app.Bank_Account_Management_System.dto.BankAccountResponse;
+import com.app.Bank_Account_Management_System.dto.user.BalanceDTO;
 import com.app.Bank_Account_Management_System.exception.ResourceNotFoundException;
 import com.app.Bank_Account_Management_System.model.AccountHolder;
 import com.app.Bank_Account_Management_System.model.BankAccount;
@@ -20,12 +21,17 @@ import java.util.stream.Collectors;
 public class BankAccountService {
     private final AccountHolderRepository accountHolderRepository;
     private final BankAccountRepository bankAccountRepository;
+    private final AuthenticatedUserService authenticatedUserService;
 
     public BankAccountResponse fetchById(Long id) {
         BankAccount bankAccount = bankAccountRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Bank Account not found with id: "+id)
         );
         return mapToBankAccountResponse(bankAccount);
+    }
+    public BalanceDTO getBalance(){
+        BankAccount bankAccount = authenticatedUserService.getCurrentUserBankAccount();
+        return new BalanceDTO(bankAccount.getAccountNumber() , bankAccount.getBalance());
     }
 
     public void createBankAccount(BankAccountRequest bankAccountRequest) {
@@ -52,6 +58,9 @@ public class BankAccountService {
         );
         updateRequestToBankAccount(bankAccount , request);
         bankAccountRepository.save(bankAccount);
+    }
+    public boolean isAccountNumberExists(String accountNumber){
+        return bankAccountRepository.existsByAccountNumber(accountNumber);
     }
     private BankAccountResponse mapToBankAccountResponse(BankAccount bankAccount) {
         BankAccountResponse response = new BankAccountResponse();

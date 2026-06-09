@@ -41,12 +41,6 @@ public class AccountHolderService {
         updateAccountFromRequest(existingAccount, accountHolderRequest);
         accountHolderRepository.save(existingAccount);
     }
-    public void deleteAccount(Long id) {
-        AccountHolder accountHolder = accountHolderRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Account holder not found with id: " + id)
-        );
-        accountHolderRepository.delete(accountHolder);
-    }
     private void updateAccountFromRequest(AccountHolder accountHolder , AccountHolderRequest accountHolderRequest) {
         accountHolder.setFirstName(accountHolderRequest.getFirstName());
         accountHolder.setLastName(accountHolderRequest.getLastName());
