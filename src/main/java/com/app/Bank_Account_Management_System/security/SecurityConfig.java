@@ -30,7 +30,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain( HttpSecurity http) throws Exception {
-
         return http
 
                 .csrf(
@@ -49,7 +48,8 @@ public class SecurityConfig {
                         auth -> auth
                                 // public endpoints
                                 .requestMatchers(
-                                        "/auth/**","/h2-console/**"
+                                        "/auth/**"
+
                                 )
                                 .permitAll()
 
@@ -61,7 +61,7 @@ public class SecurityConfig {
 
                                 // user routes
                                 .requestMatchers(
-                                        "/customer/**"
+                                        "/api/user/**"
                                 )
                                 .hasRole("USER")
 

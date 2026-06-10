@@ -2,7 +2,6 @@ package com.app.Bank_Account_Management_System.dto;
 
 import com.app.Bank_Account_Management_System.model.AccountType;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -11,24 +10,25 @@ import lombok.Data;
 @Data
 public class AddUserDTO {
     // for User
-    @NotBlank
+    @NotBlank(message =  "username is required!")
     private String username;
-    @NotBlank
+    @NotBlank(message =  "password is required!")
     private String password;
 
     // for Account Holder
-    @NotBlank
+    @NotBlank(message =  "firstName is required!")
     private String firstName;
-    @NotBlank
+    @NotBlank(message =  "lastName is required!")
     private String lastName;
-    @Email
+
+    @NotBlank(message = "email is required!")
     private String email;
-    @NotBlank
+    @NotBlank(message =  "phoneNumber is required!")
     private String phoneNumber;
-    @NotBlank
+    @NotBlank(message =  "address is required!")
     private String address;
 
     // for Bank Account
-    @NotNull
+    @NotNull(message =  "AccountType is required! (e.g SAVINGS , Fixed_Deposit , CURRENT")
     private AccountType accountType;
 }
