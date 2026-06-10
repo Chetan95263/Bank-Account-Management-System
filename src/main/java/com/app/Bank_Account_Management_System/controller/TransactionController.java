@@ -3,11 +3,13 @@ package com.app.Bank_Account_Management_System.controller;
 import com.app.Bank_Account_Management_System.dto.TransactionRequest;
 import com.app.Bank_Account_Management_System.dto.TransactionResponse;
 import com.app.Bank_Account_Management_System.service.TransactionService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createTransaction(@RequestBody TransactionRequest request) {
+    public ResponseEntity<Void> createTransaction(@Valid @RequestBody TransactionRequest request) {
         transactionService.performTransaction(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

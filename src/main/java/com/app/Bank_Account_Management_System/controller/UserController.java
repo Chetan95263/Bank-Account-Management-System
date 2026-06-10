@@ -8,6 +8,7 @@ import com.app.Bank_Account_Management_System.dto.user.UserTransactionResponse;
 import com.app.Bank_Account_Management_System.service.BankAccountService;
 import com.app.Bank_Account_Management_System.service.TransactionService;
 import com.app.Bank_Account_Management_System.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserProfile());
     }
     @PostMapping("/transaction")
-    public ResponseEntity<MessageDTO> processTransaction(@RequestBody TransactionRequest transactionRequest) {
+    public ResponseEntity<MessageDTO> processTransaction(@Valid @RequestBody TransactionRequest transactionRequest) {
         transactionService.performTransaction(transactionRequest);
         return ResponseEntity.ok(new MessageDTO("Transaction successfully completed!"));
     }

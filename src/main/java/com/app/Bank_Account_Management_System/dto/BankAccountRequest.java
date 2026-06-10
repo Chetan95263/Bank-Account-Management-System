@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class BankAccountRequest {
 
-    @NotBlank
+    @NotBlank(message = "AccountHolder id is required!")
     private Long accountHolderId;
 
     @NotNull(message = "Account type is required")

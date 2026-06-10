@@ -3,6 +3,7 @@ package com.app.Bank_Account_Management_System.controller;
 import com.app.Bank_Account_Management_System.dto.LoginRequest;
 import com.app.Bank_Account_Management_System.dto.LoginResponse;
 import com.app.Bank_Account_Management_System.security.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginRequest loginDTO) {
+    public ResponseEntity<LoginResponse> loginUser(@Valid @RequestBody LoginRequest loginDTO) {
         return ResponseEntity.ok(authService.login(loginDTO));
     }
 }
