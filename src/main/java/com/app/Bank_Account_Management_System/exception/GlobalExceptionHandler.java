@@ -5,6 +5,7 @@ import com.app.Bank_Account_Management_System.dto.MessageDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -68,5 +69,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(
                 new MessageDTO("Malformed JSON request")
         );
+    }
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<MessageDTO> handleUsernameNotFound(UsernameNotFoundException ex) {
+        return ResponseEntity.badRequest().body(new MessageDTO(ex.getMessage()));
     }
 }
